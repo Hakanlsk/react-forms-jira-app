@@ -1,6 +1,12 @@
 import { useState } from "react";
+import {useContext } from 'react';
+import TasksContext from '../context/task'; 
 
-function TaskCreate({onCreate, task, taskFormUpdate, onUpdate}) {
+
+function TaskCreate({task, taskFormUpdate, onUpdate}) {
+
+    const {createTask, editTaskById} = useContext(TasksContext);
+
     const [title, setTitle] = useState(task ? task.title : '')
     const [taskDesc, setTaskDesc] = useState(task ? task.taskDesc : '')
 
@@ -16,8 +22,10 @@ function TaskCreate({onCreate, task, taskFormUpdate, onUpdate}) {
         event.preventDefault();
         if(taskFormUpdate){
             onUpdate(task.id, title, taskDesc)
+            // editTaskById(task.id, title, taskDesc);     HATA VERDİ
         }else{
-            onCreate(title, taskDesc);
+            // onCreate(title, taskDesc);
+            createTask(title, taskDesc);
         }
         setTitle('');
         setTaskDesc('');    
